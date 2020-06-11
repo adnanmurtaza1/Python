@@ -1,4 +1,5 @@
 #comment as a text
+#I made another comment yessir i did
 def give_all_locations(index, piece, board, allLoc): # gets all locations based on the piece at an index on the board
     if piece == "p":
         return locations_for_p(index, board)
