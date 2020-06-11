@@ -1,4 +1,4 @@
-"test to see if this works"
+#comment as a text
 def give_all_locations(index, piece, board, allLoc): # gets all locations based on the piece at an index on the board
     if piece == "p":
         return locations_for_p(index, board)
@@ -496,7 +496,7 @@ while True:  # Lasting forever
 
     if check: # checks for checkmate and the game is over
         king_locations = give_all_locations(index_king, king, board, allLoc)
-        if len(king_locations) == 0: # if king has nowhere to go either
+        if len(king_locations) == 0: # if king has nowhere to go either # also check for
             if white:
                 print("CHECKMATE! WHITE WINS!")
                 break
