@@ -81,7 +81,42 @@ print(check(n, w, b))
 '''
 
 
-og_og_weight = (0, 0, 0, 0)
+
+
+def table_work(bit, num, og_og_weight, og_og_bias, change_frac):
+    table = truth_table(bit, num)
+    og_weight= og_og_weight
+    og_bias = og_og_bias
+    for epoch in range(0, 100): #running all the epochs for a single table
+            temp_weight = og_weight
+            temp_bias = og_bias
+            for row in range(len(table)):
+                vector_x = table[row][0]
+                table_answer = table[row][1]
+                p_value = perceptron(step, og_weight, og_bias, vector_x)
+                if p_value != table_answer:
+                    og_weight = sum_vectors(og_weight, scalar_vector(((table_answer - p_value)*change_frac), vector_x))
+                    og_bias = og_bias + (table_answer - p_value)*change_frac
+
+            if (temp_weight == og_weight and temp_bias == og_bias) or epoch == 100:
+                works = True
+                for row in range(len(table)):
+                    vector_x = table[row][0]
+                    table_answer = table[row][1]
+                    p_value = perceptron(step, og_weight, og_bias, vector_x)
+                    if p_value != table_answer:
+                        works = False
+                if works == True:
+                    pretty_print_tt(table)
+                    print(og_weight, og_bias)
+                    return works
+                    break #breaks out of the epoch loop
+    return False
+
+
+
+'''
+og_og_weight = (0, 0)
 bit = len(og_og_weight)
 og_og_bias = 0
 change_frac = 1
@@ -89,35 +124,10 @@ working = 0
 
 
 for table_num in range(2**(2**bit)):
-    table = truth_table(bit, table_num)
-    og_weight= og_og_weight
-    og_bias = og_og_bias
-    for epoch in range(0, 100): #running all the epochs for a single table
-        temp_weight = og_weight
-        temp_bias = og_bias
-        for row in range(len(table)):
-            vector_x = table[row][0]
-            table_answer = table[row][1]
-            p_value = perceptron(step, og_weight, og_bias, vector_x)
-            if p_value != table_answer:
-                og_weight = sum_vectors(og_weight, scalar_vector(((table_answer - p_value)*change_frac), vector_x))
-                og_bias = og_bias + (table_answer - p_value)*change_frac
-
-        if (temp_weight == og_weight and temp_bias == og_bias) or epoch == 100:
-            works = True
-            for row in range(len(table)):
-                vector_x = table[row][0]
-                table_answer = table[row][1]
-                p_value = perceptron(step, og_weight, og_bias, vector_x)
-                if p_value != table_answer:
-                    works = False
-            if works == True:
-                break #breaks out of the epoch loop
-
-    if works == True:
-        #pretty_print_tt(table)
-        print(str(table_num) + " works")
-        #print(og_weight, og_bias)
+    if table_work(bit, table_num, og_og_weight, og_og_bias, change_frac):
         working = working + 1
 
 print(str(working) + " of the possible " + str(2**(2**bit)) + " tables work")
+'''
+
+print(table_work(2, 8, (0, 0), 0, 1))
