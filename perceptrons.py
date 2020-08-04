@@ -205,3 +205,11 @@ print(str(working) + " of the possible " + str(2**(2**bit)) + " tables work")
 # p4_result = perceptron(step, (1, 1), 0, input_vector)
 # p5_result = perceptron(step, (1, 2), -2, (p3_result, p4_result))
 # print(p5_result)
+
+og_og_weight = (0, 0, 0, 0)
+bit = len(og_og_weight)
+og_og_bias = 0
+change_frac = 1
+
+works = table_work(bit, 512, og_og_weight, og_og_bias, change_frac)
+print(works)
